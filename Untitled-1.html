@@ -81,7 +81,7 @@
 
 
             self.addTask = function () {
-                if (self.task() || self.task().trim().length === 0) {
+                if (!self.task() || self.task().trim().length === 0) {
                     self.inputInvalid(true);
                     return;
                 }
