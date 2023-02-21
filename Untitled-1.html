@@ -76,13 +76,12 @@
 
 
             self.task = ko.observable();//Задания
-            self.tasks = ko.observableArray([
-            ]);//Массив заданий
-            self.tasks(JSON.parse(localStorage.getItem('tasks')))
+            self.tasks = ko.observableArray(JSON.parse(localStorage.getItem('tasks')));//Массив заданий
+
 
 
             self.addTask = function () {
-                if (self.task().trim().length === 0) {
+                if (self.task() || self.task().trim().length === 0) {
                     self.inputInvalid(true);
                     return;
                 }
@@ -90,6 +89,10 @@
                 self.tasks.push({ mission: self.task(), dt: self.dt })
                 localStorage.setItem('tasks', JSON.stringify(self.tasks()))
             };//Кнопка добавления
+
+            self.validationClass=ko.pureComputed(function(){
+                return this.inputInvalid() ? "invalid" : "";
+            }, self)
 
             self.removeTask = function () {
                 self.tasks.remove(this);
