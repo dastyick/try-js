@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap DateTimePicker</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div>
+        <p>Calendar:</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker">
+                            <input type="text" class="form-control"
+                                id="currentDate" /><!--Место ввода в календарь даты-->
+                            <span class="input-group-addon">
+                                <span class="glyphicon-calendar glyphicon"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <ul data-bind="foreach:tasks">
+            <li>
+                <span data-bind="text:mission"></span>
+                <div></div>
+                <span>Сделать до: <span data-bind="text:dt"></span>
+                    <!--Добавленный элемент массива-->
+                    <a href="#" data-bind="click: $parent.removeTask">Remove</a>
+                    <!--Кнопка удаления появляется у каждого добавленого элемента-->
+            </li>
+        </ul>
+        <input type="text" data-bind="value: task" placeholder="WhatToDo?" />
+        <button class="btn btn-success btn-input" data-bind="click: addTask">Add</button>
+        <!--Кнопка добавления-->
+        <div class="mistake" data-bind="if: inputInvalid">Поле обязательно для ввода.</div>
+    </div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/moment-with-locales.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+    <script>
+        var today = new Date();
+
+        $(function () {
+            $('#datetimepicker').datetimepicker({
+                format: 'DD.MM.YYYY',//День-месяц-год
+                defaultDate: moment(today),//Сегодняшний день при открытии страницы
+            });
+        });
+    </script>
+
+    <script>
+        function listViewModel() {
+            var self = this;
+            $("#datetimepicker").on("dp.change", function (e) {
+                self.dt = e.date.format('DD.MM.YYYY');
+            });
+            self.inputInvalid = ko.observable(false);
+            self.dt = null;
+
+
+            self.task = ko.observable();//Задания
+            self.tasks = ko.observableArray([
+            ]);//Массив заданий
+            self.tasks(JSON.parse(localStorage.getItem('tasks')))
+
+
+            self.addTask = function () {
+                if (self.task().trim().length === 0) {
+                    self.inputInvalid(true);
+                    return;
+                }
+                self.inputInvalid(false);
+                self.tasks.push({ mission: self.task(), dt: self.dt })
+                localStorage.setItem('tasks', JSON.stringify(self.tasks()))
+            };//Кнопка добавления
+
+            self.removeTask = function () {
+                self.tasks.remove(this);
+                localStorage.setItem('tasks', JSON.stringify(self.tasks()))
+            }//Кнопка удаления
+        }
+        ko.applyBindings(new listViewModel());
+    </script>
+</body>
+
+</html>
