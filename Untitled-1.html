@@ -43,7 +43,7 @@
                     <!--Кнопка удаления появляется у каждого добавленого элемента-->
             </li>
         </ul>
-        <input type="text" data-bind="value: task class: validationClass" placeholder="WhatToDo?" />
+        <input type="text" data-bind="value: task, class:validationClass" placeholder="WhatToDo?" />
         <button class="btn btn-success btn-input" data-bind="click: addTask">Add</button>
         <!--Кнопка добавления-->
         <div class="mistake" data-bind="if: inputInvalid">Поле обязательно для ввода.</div>
