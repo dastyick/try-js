@@ -1,3 +1,41 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height :35%;
+    min-width: 340px;
+    margin: auto;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding: 30px 0;
+    border-radius: 8px;
+}
+
+#cal{
+    position: relative;
+    padding: 30px 15px;
+    background: #fff;   
+    box-shadow:0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+#tsk-input{
+    border-radius:5px;
+    width: 68%;
+}
+#datetimepicker{
+    width: 72%;
+}
+
+#tsks{
+    border-radius:5px;
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
 .invalid {
     color: red;
     border: 1px solid red;

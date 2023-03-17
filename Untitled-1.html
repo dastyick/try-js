@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -15,38 +16,35 @@
 </head>
 
 <body>
-    <div>
+    <div id = "cal">
         <p>Calendar:</p>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
+        <div class="container"></div>
+            <div class="row"></div>
+                <div class="col-xs-12"></div>
+                    <div class="form-group"></div>
                         <div class="input-group date" id="datetimepicker">
                             <input type="text" class="form-control"
                                 id="currentDate" /><!--Место ввода в календарь даты-->
                             <span class="input-group-addon">
                                 <span class="glyphicon-calendar glyphicon"></span>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <input type="text" id="tsk-input" data-bind="value: task, class:validationClass" placeholder="WhatToDo?" />
+                        <button class="btn btn-success btn-input" data-bind="click: addTask">Добавить</button>
+                        <!--Кнопка добавления-->
+                        <div class="mistake" data-bind="if: inputInvalid">Поле обязательно для ввода.</div>
         </div>
     </div>
     <div class="container">
         <ul data-bind="foreach:tasks">
-            <li>
+            <li id = "tsks">
                 <span data-bind="text:mission"></span>
                 <div></div>
                 <span>Сделать до: <span data-bind="text:dt"></span>
                     <!--Добавленный элемент массива-->
-                    <a href="#" data-bind="click: $parent.removeTask">Remove</a>
+                    <a class="btn btn-success btn-input" href="#" data-bind="click: $parent.removeTask">Выполнено</a>
                     <!--Кнопка удаления появляется у каждого добавленого элемента-->
             </li>
         </ul>
-        <input type="text" data-bind="value: task, class:validationClass" placeholder="WhatToDo?" />
-        <button class="btn btn-success btn-input" data-bind="click: addTask">Add</button>
-        <!--Кнопка добавления-->
-        <div class="mistake" data-bind="if: inputInvalid">Поле обязательно для ввода.</div>
     </div>
 
     <script src="js/jquery-3.2.1.min.js"></script>
